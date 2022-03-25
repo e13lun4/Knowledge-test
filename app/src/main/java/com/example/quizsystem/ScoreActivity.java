@@ -23,7 +23,7 @@ public class ScoreActivity extends AppCompatActivity {
 
         String score_str = getIntent().getStringExtra("ОЧКИ");//7 14:30
         score.setText(score_str);
-
+        //Проверка Изменений
         done.setOnClickListener(view -> {
             Intent intent = new Intent(ScoreActivity.this, MainActivity.class);
             ScoreActivity.this.startActivity(intent);
