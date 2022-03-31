@@ -183,11 +183,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             startTimer();
         }else{
             //ScoreActivity
-
             Intent intent = new Intent(QuestionActivity.this, ScoreActivity.class);
             intent.putExtra("ОЧКИ", String.valueOf(score) + "/" + String.valueOf(questionList.size()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            QuestionActivity.this.finish();
+//            QuestionActivity.this.finish();
         }
     }
 
@@ -244,4 +244,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDown.cancel();
+    }
 }
