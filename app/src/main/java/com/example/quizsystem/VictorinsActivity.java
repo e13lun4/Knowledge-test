@@ -14,6 +14,8 @@ import java.util.Objects;
 
 public class VictorinsActivity extends AppCompatActivity {
 
+    private GridView victorins_grid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +28,15 @@ public class VictorinsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //      How to make Quiz App in Android Studio 2020 | Part 4 | Sets Activity 26:04 примерно тут если что поменять для базы данных
-        GridView victorins_grid = findViewById(R.id.victorin_gridview);
-        List<String> victorinList = new ArrayList<>();
-        victorinList.add("Математика");
-        victorinList.add("Геометрия");
-        victorinList.add("Физика");
+//        GridView victorins_grid = findViewById(R.id.victorin_gridview);
+        victorins_grid = findViewById(R.id.victorin_gridview);
+//        List<String> victorinList = new ArrayList<>();
+//        victorinList.add("Математика");
+//        victorinList.add("Геометрия");
+//        victorinList.add("Физика");
 
-        VictorinAdapter adapter = new VictorinAdapter(victorinList);
+//        VictorinAdapter adapter = new VictorinAdapter(victorinList);
+        VictorinAdapter adapter = new VictorinAdapter(6);
         victorins_grid.setAdapter(adapter);
     }
 

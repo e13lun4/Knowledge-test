@@ -11,14 +11,21 @@ import java.util.List;
 
 
 public class VictorinAdapter extends BaseAdapter {
-    private List<String> victorinList;
-    public VictorinAdapter(List<String> victorinList) {
-        this.victorinList = victorinList;
+//    private List<String> victorinList;
+    private int numOfVictorins;
+//    public VictorinAdapter(List<String> victorinList) {
+//        this.victorinList = victorinList;
+//    }
+    public VictorinAdapter(int numOfVictorins){
+        this.numOfVictorins = numOfVictorins;
     }
 
     @Override
+//    public int getCount() {
+//        return victorinList.size();
+//    }
     public int getCount() {
-        return victorinList.size();
+        return numOfVictorins;
     }
 
     @Override
@@ -45,7 +52,8 @@ public class VictorinAdapter extends BaseAdapter {
             parent.getContext().startActivity(intent);
         });
 
-        ((TextView) view.findViewById(R.id.victorinName)).setText(victorinList.get(position));
+//        ((TextView) view.findViewById(R.id.victorinName)).setText(victorinList.get(position));
+        ((TextView) view.findViewById(R.id.victorinName)).setText(String.valueOf(position+1));
         return view;
     }
 }
