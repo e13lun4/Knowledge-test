@@ -1,5 +1,7 @@
 package com.example.quizsystem;
 
+import static com.example.quizsystem.SplashActivity.categoryList;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -26,13 +28,13 @@ public class CategoryActivity extends AppCompatActivity {
 
         catGridView = findViewById(R.id.categoryGridView);
 
-        List<String> categoryList = new ArrayList<>();
-        categoryList.add("Категория 1");
-        categoryList.add("Категория 2");
-        categoryList.add("Категория 3");
-        categoryList.add("Категория 4");
-        categoryList.add("Категория 5");
-        categoryList.add("Категория 6");
+//        List<String> categoryList = new ArrayList<>();
+//        categoryList.add("Категория 1");
+//        categoryList.add("Категория 2");
+//        categoryList.add("Категория 3");
+//        categoryList.add("Категория 4");
+//        categoryList.add("Категория 5");
+//        categoryList.add("Категория 6");
 
         CategoryGridAdapter adapter = new CategoryGridAdapter(categoryList);
         catGridView.setAdapter(adapter);

@@ -2,6 +2,10 @@ package com.example.quizsystem;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Outline;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,9 +53,14 @@ public class CategoryGridAdapter extends BaseAdapter {
         });
 
         ((TextView) view.findViewById(R.id.categoryName)).setText(categoryList.get(position));
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
-        view.setBackgroundColor(color);
+//        Random rnd = new Random();
+//        int color = Color.argb(255, rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
+//        view.setBackgroundColor(color);
+        float r = 150;
+        ShapeDrawable shape = new ShapeDrawable(new RoundRectShape(new float[] { r, r, r, r, r, r, r, r },null,null));
+        shape.getPaint().setColor(Color.rgb(128, 0, 255));
+        view.setBackground(shape);
+//        view.setBackgroundColor(Color.rgb(128, 0, 255));
         return view;
     }
 }
