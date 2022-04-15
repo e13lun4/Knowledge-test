@@ -49,6 +49,7 @@ public class CategoryGridAdapter extends BaseAdapter {
         view.setOnClickListener(v -> {
             Intent intent = new Intent(parent.getContext(), VictorinsActivity.class);
             intent.putExtra("CATEGORY", categoryList.get(position));
+            intent.putExtra("CATEGORY_ID", position + 1);
             parent.getContext().startActivity(intent);
         });
 
