@@ -17,6 +17,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/victorin_bg"
         android:text="Викторины"
         android:textSize="26sp"
         android:textStyle="bold"
@@ -24,6 +25,7 @@
 
     <GridView
         android:id="@+id/victorin_gridview"
+        android:background="@drawable/victorin_bg"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

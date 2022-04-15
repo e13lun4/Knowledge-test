@@ -23,7 +23,7 @@ public class VictorinsActivity extends AppCompatActivity {
 
     private GridView victorins_grid;
     private FirebaseFirestore firestore;
-    private int category_id;
+    public static int category_id;
     private Dialog loadingDialog;
 
     @Override
@@ -72,7 +72,7 @@ public class VictorinsActivity extends AppCompatActivity {
                     finish();
                 }
             }else{
-                Toast.makeText(VictorinsActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(VictorinsActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
             }
             loadingDialog.cancel();
         });

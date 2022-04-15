@@ -12,6 +12,7 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CategoryActivity extends AppCompatActivity {
     private GridView catGridView;
@@ -23,7 +24,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Категории");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Категории");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         catGridView = findViewById(R.id.categoryGridView);
