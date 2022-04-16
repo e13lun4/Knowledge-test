@@ -35,6 +35,26 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <Button
+        android:id="@+id/ma_createB"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/purple_200"
+        android:text="СОЗДАТЬ"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:cornerRadius="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/ma_startB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_title" />
+
+    <Button
         android:id="@+id/ma_startB"
         android:layout_width="0dp"
         android:layout_height="65dp"
