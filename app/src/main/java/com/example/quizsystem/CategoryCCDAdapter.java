@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +61,9 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
         private TextView categoryCCDName;
         private ImageView deleteButton;
         private Dialog loadingDialog;
+        private Dialog editDialog;
+        private EditText currentCategoryName;
+        private Button editCategoryNameButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -71,13 +76,43 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
             loadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
             loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
+            editDialog = new Dialog(itemView.getContext());
+            editDialog.setContentView(R.layout.edit_category_dialog);
+            editDialog.setCancelable(true);
+            editDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            currentCategoryName = editDialog.findViewById(R.id.editCurrentCategoryName);
+            editCategoryNameButton = editDialog.findViewById(R.id.changeCategoryDialogButton);
+
         }
         private void setData(String title, int pos, CategoryCCDAdapter adapter){
             categoryCCDName.setText(title);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    currentCategoryName.setText(categoryCCDList.get(pos).getName());
+                    editDialog.show();
+
+                    return false;
+                }
+            });
+
+            editCategoryNameButton.setOnClickListener(view -> {
+                if (currentCategoryName.getText().toString().isEmpty()){
+                    currentCategoryName.setError("Введите название категории");
+                    return;
+                }
+
+                updateCategoryName(currentCategoryName.getText().toString(), pos, itemView.getContext(), adapter);
+
+            });
+
             deleteButton.setOnClickListener(view -> {
                 AlertDialog dialog = new AlertDialog.Builder(itemView.getContext())
                         .setTitle("Удалить категорию")
-                        .setMessage("Вы хотите удалить категорию?")
+                        .setMessage("Вы точно хотите удалить категорию?")
                         .setPositiveButton("Удалить", (dialogInterface, i) -> {
                             deleteCategory(pos, itemView.getContext(), adapter);
                         })
@@ -137,5 +172,44 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
 //                        Log.w("Не удалено", "Error deleting document", e);
 //                    });
         }
+
+        @SuppressLint("NotifyDataSetChanged")
+        private void updateCategoryName(String categoryNewName, int pos, Context context, CategoryCCDAdapter adapter){
+            editDialog.dismiss();
+            loadingDialog.show();
+
+            Map<String, Object> categoryDate = new ArrayMap<>();
+            categoryDate.put("NAME", categoryNewName);
+
+            FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+            firestore.collection("QUIZ").document(categoryCCDList.get(pos).getId())
+                    .update(categoryDate)
+                    .addOnSuccessListener(unused -> {
+
+                        Map<String, Object> categoryDocument = new ArrayMap<>();
+                        categoryDocument.put("CAT" + String.valueOf(pos+1) + "_NAME", categoryNewName);
+
+                        firestore.collection("QUIZ").document("Categories")
+                                .update(categoryDocument)
+                                .addOnSuccessListener(unused1 -> {
+
+                                    Toast.makeText(context, "Название категории успешно изменено", Toast.LENGTH_SHORT).show();
+                                    CategoryCCDActivity.categoryCCDList.get(pos).setName(categoryNewName);
+                                    adapter.notifyDataSetChanged();
+
+                                    loadingDialog.dismiss();
+
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(context, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismiss();
+                                });
+
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(context, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
+                    });
+
+        }
+
     }
 }
