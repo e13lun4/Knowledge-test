@@ -123,6 +123,7 @@ public class CategoryCCDActivity extends AppCompatActivity {
         Map<String, Object> categoryDate = new ArrayMap<>();
         categoryDate.put("NAME", title);
         categoryDate.put("VICTORINS", 0);
+        categoryDate.put("COUNTER", "1");
 
         String documentID = firestore.collection("QUIZ").document().getId();
         firestore.collection("QUIZ").document(documentID)

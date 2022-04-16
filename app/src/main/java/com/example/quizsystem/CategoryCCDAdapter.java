@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -88,15 +89,19 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
         private void setData(String title, int pos, CategoryCCDAdapter adapter){
             categoryCCDName.setText(title);
 
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View view) {
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(itemView.getContext(), VictorinsCCDActivity.class);
+                // Вставление тайтла
+                intent.putExtra("CATEGORY", title);
+                itemView.getContext().startActivity(intent);
+            });
 
-                    currentCategoryName.setText(categoryCCDList.get(pos).getName());
-                    editDialog.show();
+            itemView.setOnLongClickListener(view -> {
 
-                    return false;
-                }
+                currentCategoryName.setText(categoryCCDList.get(pos).getName());
+                editDialog.show();
+
+                return false;
             });
 
             editCategoryNameButton.setOnClickListener(view -> {
