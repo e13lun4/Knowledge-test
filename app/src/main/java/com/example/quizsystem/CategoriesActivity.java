@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
-public class CategoryActivity extends AppCompatActivity {
+public class CategoriesActivity extends AppCompatActivity {
     private GridView catGridView;
 
     @Override
@@ -37,14 +35,14 @@ public class CategoryActivity extends AppCompatActivity {
 //        categoryList.add("Категория 5");
 //        categoryList.add("Категория 6");
 
-        CategoryGridAdapter adapter = new CategoryGridAdapter(categoryList);
+        CategoryAdapter adapter = new CategoryAdapter(categoryList);
         catGridView.setAdapter(adapter);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
-            CategoryActivity.this.finish();
+            CategoriesActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

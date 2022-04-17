@@ -15,10 +15,10 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Random;
 
-public class CategoryGridAdapter extends BaseAdapter {
+public class CategoryAdapter extends BaseAdapter {
     private List<String> categoryList;
 
-    public CategoryGridAdapter(List<String> categoryList) {
+    public CategoryAdapter(List<String> categoryList) {
         this.categoryList = categoryList;
     }
 

@@ -4,17 +4,14 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.ArrayMap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,8 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -90,8 +85,8 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
             categoryCCDName.setText(title);
 
             itemView.setOnClickListener(view -> {
+                CategoriesCCDActivity.selectedCategoryIndex = pos;
                 Intent intent = new Intent(itemView.getContext(), VictorinsCCDActivity.class);
-                // Вставление тайтла
                 intent.putExtra("CATEGORY", title);
                 itemView.getContext().startActivity(intent);
             });
@@ -159,7 +154,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                     .set(categoryDoc)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(context, "Категория удалена успешно", Toast.LENGTH_SHORT).show();
-                        CategoryCCDActivity.categoryCCDList.remove(id);
+                        CategoriesCCDActivity.categoriesCCDList.remove(id);
                         adapter.notifyDataSetChanged();
                         loadingDialog.dismiss();
 
@@ -199,7 +194,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                                 .addOnSuccessListener(unused1 -> {
 
                                     Toast.makeText(context, "Название категории успешно изменено", Toast.LENGTH_SHORT).show();
-                                    CategoryCCDActivity.categoryCCDList.get(pos).setName(categoryNewName);
+                                    CategoriesCCDActivity.categoriesCCDList.get(pos).setName(categoryNewName);
                                     adapter.notifyDataSetChanged();
 
                                     loadingDialog.dismiss();

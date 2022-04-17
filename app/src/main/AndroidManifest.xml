@@ -14,10 +14,13 @@
         android:theme="@style/Theme.QuizSystem"
         tools:targetApi="31">
         <activity
+            android:name=".QuestionsCCDActivity"
+            android:exported="false" />
+        <activity
             android:name=".VictorinsCCDActivity"
             android:exported="false" />
         <activity
-            android:name=".CategoryCCDActivity"
+            android:name=".CategoriesCCDActivity"
             android:exported="false" />
         <activity
             android:name=".ScoreActivity"
@@ -29,7 +32,7 @@
             android:name=".VictorinsActivity"
             android:exported="false" />
         <activity
-            android:name=".CategoryActivity"
+            android:name=".CategoriesActivity"
             android:exported="false" />
         <activity
             android:name=".SplashActivity"

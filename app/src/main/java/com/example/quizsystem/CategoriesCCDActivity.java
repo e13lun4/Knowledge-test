@@ -7,19 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,10 +23,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class CategoryCCDActivity extends AppCompatActivity {
+public class CategoriesCCDActivity extends AppCompatActivity {
     private RecyclerView categoryRecyclerView;
     private Button addCategoryButton;
-    public static List<CategoryModel> categoryCCDList = new ArrayList<>();
+    public static List<CategoryModel> categoriesCCDList = new ArrayList<>();
+    public static int selectedCategoryIndex = 0;
     private FirebaseFirestore firestore;
     private Dialog loadingDialog, addCategoryDialog;
     private EditText dialogEditCategoryName;
@@ -51,14 +47,13 @@ public class CategoryCCDActivity extends AppCompatActivity {
         categoryRecyclerView = findViewById(R.id.categoryCCDRecyclerView);
         addCategoryButton = findViewById(R.id.addCategoryButton);
 
-        loadingDialog = new Dialog(CategoryCCDActivity.this);
+        loadingDialog = new Dialog(CategoriesCCDActivity.this);
         loadingDialog.setContentView(R.layout.loading_progressbar);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        loadingDialog.show();
 
-        addCategoryDialog = new Dialog(CategoryCCDActivity.this);
+        addCategoryDialog = new Dialog(CategoriesCCDActivity.this);
         addCategoryDialog.setContentView(R.layout.add_category_dialog);
         addCategoryDialog.setCancelable(true);
         addCategoryDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -81,7 +76,7 @@ public class CategoryCCDActivity extends AppCompatActivity {
             addNewCategory(dialogEditCategoryName.getText().toString());
         });
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(CategoryCCDActivity.this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(CategoriesCCDActivity.this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         categoryRecyclerView.setLayoutManager(layoutManager);
 
@@ -90,7 +85,7 @@ public class CategoryCCDActivity extends AppCompatActivity {
     }
     private void loadData(){
         loadingDialog.show();
-        categoryCCDList.clear();
+        categoriesCCDList.clear();
         firestore.collection("QUIZ").document("Categories")
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
@@ -101,16 +96,16 @@ public class CategoryCCDActivity extends AppCompatActivity {
                         String categoryName = doc.getString("CAT" + String.valueOf(i) + "_NAME");
                         String categoryId = doc.getString("CAT" + String.valueOf(i) + "_ID");
 
-                        categoryCCDList.add(new CategoryModel(categoryId, categoryName, "0"));
+                        categoriesCCDList.add(new CategoryModel(categoryId, categoryName, "0", "1"));
                     }
-                    adapter = new CategoryCCDAdapter(categoryCCDList);
+                    adapter = new CategoryCCDAdapter(categoriesCCDList);
                     categoryRecyclerView.setAdapter(adapter);
                 }else{
-                    Toast.makeText(CategoryCCDActivity.this, "Отсутствуют категории", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoriesCCDActivity.this, "Отсутствуют категории", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }else{
-                Toast.makeText(CategoryCCDActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CategoriesCCDActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
             loadingDialog.dismiss();
         });
@@ -131,24 +126,24 @@ public class CategoryCCDActivity extends AppCompatActivity {
                 .addOnSuccessListener(unused -> {
 
                     Map<String, Object> categoryDocument = new ArrayMap<>();
-                    categoryDocument.put("CAT" + String.valueOf(categoryCCDList.size() + 1) + "_NAME", title);
-                    categoryDocument.put("CAT" + String.valueOf(categoryCCDList.size() + 1) + "_ID", documentID);
-                    categoryDocument.put("COUNT", categoryCCDList.size()+1);
+                    categoryDocument.put("CAT" + String.valueOf(categoriesCCDList.size() + 1) + "_NAME", title);
+                    categoryDocument.put("CAT" + String.valueOf(categoriesCCDList.size() + 1) + "_ID", documentID);
+                    categoryDocument.put("COUNT", categoriesCCDList.size()+1);
 
                     firestore.collection("QUIZ").document("Categories")
                             .update(categoryDocument)
                             .addOnSuccessListener(unused1 -> {
-                                Toast.makeText(CategoryCCDActivity.this, "Категория добавлена успешно", Toast.LENGTH_SHORT).show();
-                                categoryCCDList.add(new CategoryModel(documentID, title, "0"));
-                                adapter.notifyItemInserted(categoryCCDList.size());
+                                Toast.makeText(CategoriesCCDActivity.this, "Категория добавлена успешно", Toast.LENGTH_SHORT).show();
+                                categoriesCCDList.add(new CategoryModel(documentID, title, "0", "1"));
+                                adapter.notifyItemInserted(categoriesCCDList.size());
                                 loadingDialog.dismiss();
                             }).addOnFailureListener(e -> {
-                                Toast.makeText(CategoryCCDActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CategoriesCCDActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
                                 loadingDialog.dismiss();
                             });
 
                 }).addOnFailureListener(e -> {
-                    Toast.makeText(CategoryCCDActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CategoriesCCDActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
                     loadingDialog.dismiss();
                 });
     }
@@ -156,7 +151,7 @@ public class CategoryCCDActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home){
-            CategoryCCDActivity.this.finish();
+            CategoriesCCDActivity.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }
