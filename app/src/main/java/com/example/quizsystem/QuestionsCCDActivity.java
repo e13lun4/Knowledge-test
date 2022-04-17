@@ -11,7 +11,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.MenuItem;
@@ -62,7 +64,9 @@ public class QuestionsCCDActivity extends AppCompatActivity {
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         addQuestionButton.setOnClickListener(view -> {
-
+            Intent intent = new Intent(QuestionsCCDActivity.this, QuestionDetailsActivity.class);
+            intent.putExtra("ACTION", "ADD");
+            startActivity(intent);
         });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -121,6 +125,16 @@ public class QuestionsCCDActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (adapter != null){
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

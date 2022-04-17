@@ -49,7 +49,7 @@ public class VictorinAdapter extends BaseAdapter {
 
         view.setOnClickListener(view1 -> {
             Intent intent = new Intent(parent.getContext(), QuestionActivity.class);
-            intent.putExtra("VICTORIN_NUMBER", position+1);
+            intent.putExtra("VICTORIN_NUMBER", position);
             parent.getContext().startActivity(intent);
         });
 

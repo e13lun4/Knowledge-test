@@ -1,6 +1,10 @@
 package com.example.quizsystem;
 
-import static com.example.quizsystem.VictorinsActivity.category_id;
+
+import static com.example.quizsystem.SplashActivity.categoryList;
+import static com.example.quizsystem.SplashActivity.selectedCatIndex;
+import static com.example.quizsystem.VictorinsActivity.victorinsIDs;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -29,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class QuestionActivity extends AppCompatActivity implements View.OnClickListener {
@@ -69,6 +75,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         loadingDialog.show();
 
+        questionList = new ArrayList<>();
+
         victorinNumber = getIntent().getIntExtra("VICTORIN_NUMBER", 1);
         firestore = FirebaseFirestore.getInstance();
 
@@ -79,32 +87,45 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void getQuestionsList(){
-        questionList = new ArrayList<>();
-        firestore.collection("QUIZ").document("CAT" + String.valueOf(category_id))
-                .collection("VICTORIN" + String.valueOf(victorinNumber))
-                .get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                QuerySnapshot questions = task.getResult();
-                for (QueryDocumentSnapshot doc : questions){
-                    questionList.add(new Question(doc.getString("QUESTION"),
-                            doc.getString("A"),
-                            doc.getString("B"),
-                            doc.getString("C"),
-                            doc.getString("D"),
-                            Integer.parseInt(Objects.requireNonNull(doc.getString("ANSWER")))
-                            ));
-                }
-                setQuestion();
-            }else{
-                Toast.makeText(QuestionActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-            }
-            loadingDialog.cancel();
+        questionList.clear();
+        firestore.collection("QUIZ").document(categoryList.get(selectedCatIndex).getId())
+                .collection(victorinsIDs.get(victorinNumber)).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    Map<String, QueryDocumentSnapshot> documentList = new ArrayMap<>();
+
+                    for(QueryDocumentSnapshot document: queryDocumentSnapshots){
+                        documentList.put(document.getId(), document);
+                    }
+
+                    QueryDocumentSnapshot questionsListDocument = documentList.get("QUESTIONS_LIST");
+
+                    String count = Objects.requireNonNull(questionsListDocument).getString("COUNT");
+
+                    for(int i = 0; i < Integer.parseInt(Objects.requireNonNull(count)); i++){
+                        String questionID = questionsListDocument.getString("Q" + String.valueOf(i+1) + "_ID");
+
+                        QueryDocumentSnapshot questionDocument = documentList.get(questionID);
+
+                        questionList.add(new Question(
+                                Objects.requireNonNull(questionDocument).getString("QUESTION"),
+                                questionDocument.getString("A"),
+                                questionDocument.getString("B"),
+                                questionDocument.getString("C"),
+                                questionDocument.getString("D"),
+                                Integer.parseInt(Objects.requireNonNull(questionDocument.getString("ANSWER")))
+                        ));
+                    }
+
+                    setQuestion();
+
+                    loadingDialog.dismiss();
+
+                }).addOnFailureListener(e -> {
+            Toast.makeText(QuestionActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            loadingDialog.dismiss();
         });
-//        questionList.add(new Question("Вопрос 1", "A", "B", "C", "D", 2));
-//        questionList.add(new Question("Вопрос 2", "Aa", "Bb", "Cc", "Dd", 3));
-//        questionList.add(new Question("Вопрос 3", "Ab", "Ba", "Cd", "Dc", 1));
-//        questionList.add(new Question("Вопрос 4", "Ac", "Bd", "Cb", "Da", 4));
-//        questionList.add(new Question("Вопрос 5", "Aac", "Bdc", "Ccd", "Dbb", 2));
+
     }
 
     private void setQuestion(){

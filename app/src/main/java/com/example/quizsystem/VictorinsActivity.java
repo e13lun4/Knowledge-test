@@ -1,18 +1,20 @@
 package com.example.quizsystem;
 
+
+import static com.example.quizsystem.SplashActivity.categoryList;
+import static com.example.quizsystem.SplashActivity.selectedCatIndex;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -23,8 +25,8 @@ public class VictorinsActivity extends AppCompatActivity {
 
     private GridView victorins_grid;
     private FirebaseFirestore firestore;
-    public static int category_id;
     private Dialog loadingDialog;
+    public static List<String> victorinsIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,9 @@ public class VictorinsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.victorin_toolbar);
         setSupportActionBar(toolbar);
 
-        String title = getIntent().getStringExtra("CATEGORY");
-        category_id = getIntent().getIntExtra("CATEGORY_ID", 1);
-        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+//        String title = getIntent().getStringExtra("CATEGORY");
+//        category_id = getIntent().getIntExtra("CATEGORY_ID", 1);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(categoryList.get(selectedCatIndex).getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        GridView victorins_grid = findViewById(R.id.victorin_gridview);
         victorins_grid = findViewById(R.id.victorin_gridview);
@@ -59,23 +61,28 @@ public class VictorinsActivity extends AppCompatActivity {
     }
 
     public void loadVictorins(){
-        firestore.collection("QUIZ").document("CAT" + String.valueOf(category_id))
-                .get().addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                DocumentSnapshot doc = task.getResult();
-                if(doc.exists()){
-                    long victorins = (long) doc.get("VICTORINS");
-                    VictorinAdapter adapter = new VictorinAdapter((int) victorins);
+
+        victorinsIDs.clear();
+
+        firestore.collection("QUIZ").document(categoryList.get(selectedCatIndex).getId())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    long numberOfVictorins = (long) documentSnapshot.get("VICTORINS");
+
+                    for (int i = 1; i <= numberOfVictorins; i ++){
+                        victorinsIDs.add(documentSnapshot.getString("VICTORIN" + String.valueOf(i) + "_ID"));
+                    }
+
+                    VictorinAdapter adapter = new VictorinAdapter(victorinsIDs.size());
                     victorins_grid.setAdapter(adapter);
-                }else{
-                    Toast.makeText(VictorinsActivity.this, "Отсутствуют викторины", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-            }else{
-                Toast.makeText(VictorinsActivity.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
-            }
-            loadingDialog.cancel();
-        });
+
+                    loadingDialog.dismiss();
+
+                }).addOnFailureListener(e -> {
+                    Toast.makeText(VictorinsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    loadingDialog.dismiss();
+                });
+
     }
 
     @Override

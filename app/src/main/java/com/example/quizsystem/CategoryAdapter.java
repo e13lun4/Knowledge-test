@@ -2,8 +2,6 @@ package com.example.quizsystem;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Outline;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.view.LayoutInflater;
@@ -13,12 +11,11 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.List;
-import java.util.Random;
 
 public class CategoryAdapter extends BaseAdapter {
-    private List<String> categoryList;
+    private List<CategoryFModel> categoryList;
 
-    public CategoryAdapter(List<String> categoryList) {
+    public CategoryAdapter(List<CategoryFModel> categoryList) {
         this.categoryList = categoryList;
     }
 
@@ -47,13 +44,14 @@ public class CategoryAdapter extends BaseAdapter {
         }
 
         view.setOnClickListener(v -> {
+            SplashActivity.selectedCatIndex = position;
             Intent intent = new Intent(parent.getContext(), VictorinsActivity.class);
-            intent.putExtra("CATEGORY", categoryList.get(position));
-            intent.putExtra("CATEGORY_ID", position + 1);
+//            intent.putExtra("CATEGORY", categoryList.get(position));
+//            intent.putExtra("CATEGORY_ID", position + 1);
             parent.getContext().startActivity(intent);
         });
 
-        ((TextView) view.findViewById(R.id.categoryName)).setText(categoryList.get(position));
+        ((TextView) view.findViewById(R.id.categoryName)).setText(categoryList.get(position).getName());
 //        Random rnd = new Random();
 //        int color = Color.argb(255, rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
 //        view.setBackgroundColor(color);

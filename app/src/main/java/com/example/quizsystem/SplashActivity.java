@@ -2,7 +2,6 @@ package com.example.quizsystem;
 
 import static java.lang.Thread.sleep;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
@@ -15,8 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,7 +24,8 @@ import java.util.List;
 public class SplashActivity extends AppCompatActivity {
 
     private TextView appName;
-    public static List<String> categoryList = new ArrayList<>();
+    public static List<CategoryFModel> categoryList = new ArrayList<>();
+    public static int selectedCatIndex = 0;
     private FirebaseFirestore firestore;
 
     @Override
@@ -65,8 +63,10 @@ public class SplashActivity extends AppCompatActivity {
                         if(doc.exists()){
                             long count = (long) doc.get("COUNT");
                             for(int i = 1; i <= count; i++){
-                                String categoryName = doc.getString("CAT" + String.valueOf(i));
-                                categoryList.add(categoryName);
+                                String categoryName = doc.getString("CAT" + String.valueOf(i) + "_NAME");
+                                String categoryID = doc.getString("CAT" + String.valueOf(i) + "_ID");
+
+                                categoryList.add(new CategoryFModel(categoryID, categoryName));
                             }
                             Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                             startActivity(intent);

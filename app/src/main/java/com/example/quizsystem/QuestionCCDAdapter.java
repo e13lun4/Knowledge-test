@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.ArrayMap;
 import android.view.LayoutInflater;
@@ -80,6 +81,13 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
         private void setData(int pos, QuestionCCDAdapter adapter){
             title.setText("Вопрос " + String.valueOf(pos+1));
 
+            itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(itemView.getContext(), QuestionDetailsActivity.class);
+                intent.putExtra("ACTION", "EDIT");
+                intent.putExtra("Q_ID", pos);
+                itemView.getContext().startActivity(intent);
+            });
+
             deleteQuestionButton.setOnClickListener(view -> {
                 AlertDialog dialog = new AlertDialog.Builder(itemView.getContext())
                         .setTitle("Удалить вопрос")
@@ -102,6 +110,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
             });
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         private void deleteQuestion(int pos, Context context, QuestionCCDAdapter adapter){
             loadingDialog.show();
 
