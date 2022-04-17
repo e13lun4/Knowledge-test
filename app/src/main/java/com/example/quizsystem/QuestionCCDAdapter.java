@@ -142,6 +142,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
                     }).addOnFailureListener(e -> {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                         loadingDialog.dismiss();
+
                     });
 
         }
