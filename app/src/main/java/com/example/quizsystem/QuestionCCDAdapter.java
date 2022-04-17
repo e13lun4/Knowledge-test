@@ -9,6 +9,7 @@ import static com.example.quizsystem.VictorinsCCDActivity.victorinsIDs;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.util.ArrayMap;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +48,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull QuestionCCDAdapter.ViewHolder holder, int position) {
-        holder.setData(position);
+        holder.setData(position, this);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
         }
 
         @SuppressLint("SetTextI18n")
-        private void setData(int pos){
+        private void setData(int pos, QuestionCCDAdapter adapter){
             title.setText("Вопрос " + String.valueOf(pos+1));
 
             deleteQuestionButton.setOnClickListener(view -> {
@@ -83,7 +85,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
                         .setTitle("Удалить вопрос")
                         .setMessage("Вы точно хотите удалить вопрос?")
                         .setPositiveButton("Удалить", (dialogInterface, i) -> {
-                            deleteQuestion(pos);
+                            deleteQuestion(pos, itemView.getContext(), adapter);
                         })
                         .setNegativeButton("Отмена", null)
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -100,7 +102,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
             });
         }
 
-        private void deleteQuestion(int pos){
+        private void deleteQuestion(int pos, Context context, QuestionCCDAdapter adapter){
             loadingDialog.show();
 
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -110,19 +112,36 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
                     .delete()
                     .addOnSuccessListener(unused -> {
 
-                        Map<String, Object> questionsDocument = new ArrayMap<>();
+                        Map<String, Object> questionDocument = new ArrayMap<>();
                         int index = 1;
                         for(int i = 0; i < questionsList.size(); i++){
                             if (i != pos){
-                                questionsDocument.put("Q" + String.valueOf(index) + "_ID", questionsList.get(i).getQuestionID());
+                                questionDocument.put("Q" + String.valueOf(index) + "_ID", questionsList.get(i).getQuestionID());
                                 index++;
-                                //12:56
                             }
                         }
 
+                        questionDocument.put("COUNT", String.valueOf(index - 1));
+
+                        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+                                .collection(victorinsIDs.get(selectedVictorinIndex)).document("QUESTIONS_LIST")
+                                .set(questionDocument)
+                                .addOnSuccessListener(unused1 -> {
+                                    Toast.makeText(context, "Вопрос удален успешно", Toast.LENGTH_SHORT).show();
+
+                                    questionsList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+
+                                    loadingDialog.dismiss();
+                                }).addOnFailureListener(e -> {
+                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    loadingDialog.dismiss();
+                                });
+
 
                     }).addOnFailureListener(e -> {
-
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        loadingDialog.dismiss();
                     });
 
         }
