@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
     private TextView title;
     private Button start;

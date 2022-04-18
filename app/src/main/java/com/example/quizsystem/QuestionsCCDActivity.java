@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class QuestionsCCDActivity extends AppCompatActivity {
 
     private RecyclerView questionsView;

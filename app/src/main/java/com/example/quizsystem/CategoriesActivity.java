@@ -12,6 +12,7 @@ import android.widget.GridView;
 
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class CategoriesActivity extends AppCompatActivity {
     private GridView catGridView;
 

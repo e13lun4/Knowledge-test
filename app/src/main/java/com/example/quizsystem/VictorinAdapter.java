@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+@SuppressWarnings("ALL")
 public class VictorinAdapter extends BaseAdapter {
     private int numOfVictorins;
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+@SuppressWarnings("ALL")
 public class ScoreActivity extends AppCompatActivity {
 
     private TextView score;

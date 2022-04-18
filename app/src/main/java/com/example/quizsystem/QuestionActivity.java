@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class QuestionActivity extends AppCompatActivity {
 
     private TextView question, qCount, timer;

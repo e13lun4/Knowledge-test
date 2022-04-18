@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class CategoriesCCDActivity extends AppCompatActivity {
     private RecyclerView categoryRecyclerView;
     private Button addCategoryButton;

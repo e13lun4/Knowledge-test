@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class QuestionDetailsActivity extends AppCompatActivity {
 
     private EditText question, optionA, optionB, optionC, optionD, answer;

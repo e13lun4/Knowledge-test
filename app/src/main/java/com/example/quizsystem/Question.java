@@ -1,5 +1,6 @@
 package com.example.quizsystem;
 
+@SuppressWarnings("ALL")
 public class Question {
 
     String question;

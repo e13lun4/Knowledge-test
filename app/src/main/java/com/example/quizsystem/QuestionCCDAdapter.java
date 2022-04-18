@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.ViewHolder> {
 
     private List<QuestionModel> questionList;

@@ -1,5 +1,6 @@
 package com.example.quizsystem;
 
+@SuppressWarnings("ALL")
 public class CategoryModel {
     private String id;
     private String name;

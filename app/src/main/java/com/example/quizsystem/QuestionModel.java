@@ -1,5 +1,6 @@
 package com.example.quizsystem;
 
+@SuppressWarnings("ALL")
 public class QuestionModel {
     private String questionID;
     private String question;

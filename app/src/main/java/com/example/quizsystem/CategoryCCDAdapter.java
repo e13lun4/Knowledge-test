@@ -22,14 +22,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.ViewHolder> {
 
     private List<CategoryModel> categoryCCDList;

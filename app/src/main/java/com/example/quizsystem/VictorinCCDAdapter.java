@@ -29,6 +29,7 @@ import com.google.firebase.firestore.WriteBatch;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class VictorinCCDAdapter extends RecyclerView.Adapter<VictorinCCDAdapter.ViewHolder> {
 
     private List<String> victorinIDs;
@@ -111,6 +112,7 @@ public class VictorinCCDAdapter extends RecyclerView.Adapter<VictorinCCDAdapter.
 
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         private void deleteVictorin(int pos, String victorinId, Context context, VictorinCCDAdapter adapter){
             loadingDialog.show();
 

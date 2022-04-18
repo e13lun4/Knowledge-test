@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class CategoryAdapter extends BaseAdapter {
     private List<CategoryFModel> categoryList;
 
