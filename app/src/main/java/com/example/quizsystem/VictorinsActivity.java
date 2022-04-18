@@ -1,6 +1,5 @@
 package com.example.quizsystem;
 
-
 import static com.example.quizsystem.SplashActivity.categoryList;
 import static com.example.quizsystem.SplashActivity.selectedCatIndex;
 
@@ -36,11 +35,9 @@ public class VictorinsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.victorin_toolbar);
         setSupportActionBar(toolbar);
 
-//        String title = getIntent().getStringExtra("CATEGORY");
-//        category_id = getIntent().getIntExtra("CATEGORY_ID", 1);
         Objects.requireNonNull(getSupportActionBar()).setTitle(categoryList.get(selectedCatIndex).getName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        GridView victorins_grid = findViewById(R.id.victorin_gridview);
+
         victorins_grid = findViewById(R.id.victorin_gridview);
         loadingDialog = new Dialog(VictorinsActivity.this);
         loadingDialog.setContentView(R.layout.loading_progressbar);
@@ -48,16 +45,10 @@ public class VictorinsActivity extends AppCompatActivity {
         loadingDialog.getWindow().setBackgroundDrawableResource(R.drawable.progress_background);
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         loadingDialog.show();
-//        List<String> victorinList = new ArrayList<>();
-//        victorinList.add("Математика");
-//        victorinList.add("Геометрия");
-//        victorinList.add("Физика");
 
-//        VictorinAdapter adapter = new VictorinAdapter(victorinList);
         firestore = FirebaseFirestore.getInstance();
         loadVictorins();
-//        VictorinAdapter adapter = new VictorinAdapter(6);
-//        victorins_grid.setAdapter(adapter);
+
     }
 
     public void loadVictorins(){

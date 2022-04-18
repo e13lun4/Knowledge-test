@@ -46,20 +46,14 @@ public class CategoryAdapter extends BaseAdapter {
         view.setOnClickListener(v -> {
             SplashActivity.selectedCatIndex = position;
             Intent intent = new Intent(parent.getContext(), VictorinsActivity.class);
-//            intent.putExtra("CATEGORY", categoryList.get(position));
-//            intent.putExtra("CATEGORY_ID", position + 1);
             parent.getContext().startActivity(intent);
         });
 
         ((TextView) view.findViewById(R.id.categoryName)).setText(categoryList.get(position).getName());
-//        Random rnd = new Random();
-//        int color = Color.argb(255, rnd.nextInt(255), rnd.nextInt(255), rnd.nextInt(255));
-//        view.setBackgroundColor(color);
         float r = 150;
         ShapeDrawable shape = new ShapeDrawable(new RoundRectShape(new float[] { r, r, r, r, r, r, r, r },null,null));
         shape.getPaint().setColor(Color.rgb(128, 0, 255));
         view.setBackground(shape);
-//        view.setBackgroundColor(Color.rgb(128, 0, 255));
         return view;
     }
 }

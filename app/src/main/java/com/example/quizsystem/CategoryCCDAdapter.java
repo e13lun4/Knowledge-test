@@ -1,5 +1,7 @@
 package com.example.quizsystem;
 
+import static com.example.quizsystem.CategoriesCCDActivity.categoriesCCDList;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -136,7 +140,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
             loadingDialog.show();
 
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
+//            nen
             Map<String, Object> categoryDoc = new ArrayMap<>();
             int index = 1;
 
@@ -154,7 +158,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                     .set(categoryDoc)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(context, "Категория удалена успешно", Toast.LENGTH_SHORT).show();
-                        CategoriesCCDActivity.categoriesCCDList.remove(id);
+                        categoriesCCDList.remove(id);
                         adapter.notifyDataSetChanged();
                         loadingDialog.dismiss();
 
@@ -163,14 +167,6 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                         Toast.makeText(context, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_SHORT).show();
                         loadingDialog.dismiss();
                     });
-//            String documentID = firestore.collection("QUIZ").document().getId();
-//            firestore.collection("QUIZ").document(documentID)
-//                    .delete()
-//                    .addOnSuccessListener(unused -> {
-//                        Log.d("Удалено", "DocumentSnapshot successfully deleted!");
-//                    }).addOnFailureListener(e -> {
-//                        Log.w("Не удалено", "Error deleting document", e);
-//                    });
         }
 
         @SuppressLint("NotifyDataSetChanged")
@@ -194,7 +190,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                                 .addOnSuccessListener(unused1 -> {
 
                                     Toast.makeText(context, "Название категории успешно изменено", Toast.LENGTH_SHORT).show();
-                                    CategoriesCCDActivity.categoriesCCDList.get(pos).setName(categoryNewName);
+                                    categoriesCCDList.get(pos).setName(categoryNewName);
                                     adapter.notifyDataSetChanged();
 
                                     loadingDialog.dismiss();

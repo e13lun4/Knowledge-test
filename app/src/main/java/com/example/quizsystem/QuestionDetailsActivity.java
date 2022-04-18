@@ -14,14 +14,11 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
@@ -43,7 +40,6 @@ public class QuestionDetailsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.qDetailsToolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().setTitle("Вопрос " + String.valueOf(questionsList.size() + 1));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         question = findViewById(R.id.question);

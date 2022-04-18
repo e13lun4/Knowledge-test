@@ -5,8 +5,6 @@ import static com.example.quizsystem.SplashActivity.categoryList;
 import static com.example.quizsystem.SplashActivity.selectedCatIndex;
 import static com.example.quizsystem.VictorinsActivity.victorinsIDs;
 
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
@@ -25,19 +23,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class QuestionActivity extends AppCompatActivity implements View.OnClickListener {
+public class QuestionActivity extends AppCompatActivity {
 
     private TextView question, qCount, timer;
     private Button option1, option2, option3, option4;
@@ -48,6 +42,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     private FirebaseFirestore firestore;
     private int victorinNumber;
     private Dialog loadingDialog;
+    private int selectedOption = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +58,43 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         option3 = findViewById(R.id.option3);
         option4 = findViewById(R.id.option4);
 
-        option1.setOnClickListener(this);
-        option2.setOnClickListener(this);
-        option3.setOnClickListener(this);
-        option4.setOnClickListener(this);
+        enabledButtons(option1, option2, option3, option4);
+        option1.setOnClickListener(view -> {
+            selectedOption = 1;
+
+            disabledButtons(option1, option2, option3, option4);
+
+            countDown.cancel();
+            checkAnswer(selectedOption, view);
+        });
+
+        option2.setOnClickListener(view -> {
+            selectedOption = 2;
+
+            disabledButtons(option1, option2, option3, option4);
+
+            countDown.cancel();
+            checkAnswer(selectedOption, view);
+        });
+
+
+        option3.setOnClickListener(view -> {
+            selectedOption = 3;
+
+            disabledButtons(option1, option2, option3, option4);
+
+            countDown.cancel();
+            checkAnswer(selectedOption, view);
+        });
+
+        option4.setOnClickListener(view -> {
+            selectedOption = 4;
+
+            disabledButtons(option1, option2, option3, option4);
+
+            countDown.cancel();
+            checkAnswer(selectedOption, view);
+        });
 
         loadingDialog = new Dialog(QuestionActivity.this);
         loadingDialog.setContentView(R.layout.loading_progressbar);
@@ -147,7 +175,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void startTimer(){
-         countDown = new CountDownTimer(12000, 1000) {
+         countDown = new CountDownTimer(11000, 1000) {
             @Override
             public void onTick(long l) {
                 if(l < 10000){
@@ -162,37 +190,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         };
 
         countDown.start();
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
-        int selectedOption = 0;
-
-        switch (view.getId()){
-            case R.id.option1:
-                selectedOption = 1;
-                break;
-
-            case R.id.option2:
-                selectedOption = 2;
-                break;
-
-            case R.id.option3:
-                selectedOption = 3;
-                break;
-
-            case R.id.option4:
-                selectedOption = 4;
-                break;
-
-            default:
-        }
-
-        countDown.cancel();
-
-        checkAnswer(selectedOption, view);
 
     }
 
@@ -230,6 +227,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void changeQuestion(){
+
         if(questionNum < questionList.size() - 1){
 
             questionNum++;
@@ -245,13 +243,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             timer.setText(String.valueOf(10));
 
             startTimer();
+
+//            enabledButtons(option1, option2, option3, option4);
         }else{
-            //ScoreActivity
             Intent intent = new Intent(QuestionActivity.this, ScoreActivity.class);
             intent.putExtra("ОЧКИ", String.valueOf(score) + "/" + String.valueOf(questionList.size()));
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-//            QuestionActivity.this.finish();
+            QuestionActivity.this.finish();
         }
     }
 
@@ -268,6 +267,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onAnimationEnd(Animator animator) {
+                enabledButtons(option1, option2, option3, option4);
+
                 if(value == 0){
                     switch(viewNum){
                         case 0:
@@ -306,6 +307,20 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+    }
+
+    private void enabledButtons(Button op1, Button op2, Button op3, Button op4){
+        op1.setEnabled(true);
+        op2.setEnabled(true);
+        op3.setEnabled(true);
+        op4.setEnabled(true);
+    }
+
+    private void disabledButtons(Button op1, Button op2, Button op3, Button op4){
+        op1.setEnabled(false);
+        op2.setEnabled(false);
+        op3.setEnabled(false);
+        op4.setEnabled(false);
     }
 
     @Override

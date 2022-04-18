@@ -27,14 +27,6 @@ public class CategoriesActivity extends AppCompatActivity {
 
         catGridView = findViewById(R.id.categoryGridView);
 
-//        List<String> categoryList = new ArrayList<>();
-//        categoryList.add("Категория 1");
-//        categoryList.add("Категория 2");
-//        categoryList.add("Категория 3");
-//        categoryList.add("Категория 4");
-//        categoryList.add("Категория 5");
-//        categoryList.add("Категория 6");
-
         CategoryAdapter adapter = new CategoryAdapter(categoryList);
         catGridView.setAdapter(adapter);
     }

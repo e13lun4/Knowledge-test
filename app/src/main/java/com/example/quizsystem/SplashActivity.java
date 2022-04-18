@@ -47,11 +47,6 @@ public class SplashActivity extends AppCompatActivity {
            }catch (InterruptedException e){
                e.printStackTrace();
            }
-//           loadData();
-//           sleep(3000)
-//           Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-//           startActivity(intent);
-//           SplashActivity.this.finish();
        }).start();
     }
     private void loadData(){
@@ -79,5 +74,5 @@ public class SplashActivity extends AppCompatActivity {
                         Toast.makeText(SplashActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
+        }
 }
