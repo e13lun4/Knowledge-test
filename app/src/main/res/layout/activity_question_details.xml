@@ -117,7 +117,7 @@
             android:textColor="@color/black"
             android:textCursorDrawable="@null"
             android:inputType="textPersonName"
-            android:hint="Правильный ответ" />
+            android:hint="Правильный вариант ответа" />
 
 
     </LinearLayout>
