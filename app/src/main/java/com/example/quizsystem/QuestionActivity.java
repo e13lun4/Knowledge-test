@@ -117,7 +117,7 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void getQuestionsList(){
         questionList.clear();
-        firestore.collection("QUIZ").document(categoryList.get(selectedCatIndex).getId())
+        firestore.collection("TestSystem").document(categoryList.get(selectedCatIndex).getId())
                 .collection(victorinsIDs.get(victorinNumber)).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 

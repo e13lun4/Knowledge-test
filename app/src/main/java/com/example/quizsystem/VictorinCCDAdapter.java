@@ -118,7 +118,7 @@ public class VictorinCCDAdapter extends RecyclerView.Adapter<VictorinCCDAdapter.
 
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-            firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+            firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                     .collection(victorinId).get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         WriteBatch batch = firestore.batch();
@@ -138,7 +138,7 @@ public class VictorinCCDAdapter extends RecyclerView.Adapter<VictorinCCDAdapter.
 
                             categoryDocument.put("VICTORINS", index-1);
 
-                            firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+                            firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                                     .update(categoryDocument)
                                     .addOnSuccessListener(unused1 -> {
                                         Toast.makeText(context, "Викторина удалена успешно", Toast.LENGTH_SHORT).show();

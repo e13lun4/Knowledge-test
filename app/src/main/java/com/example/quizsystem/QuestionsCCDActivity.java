@@ -80,7 +80,7 @@ public class QuestionsCCDActivity extends AppCompatActivity {
         questionsList.clear();
         loadingDialog.show();
 
-        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+        firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                 .collection(victorinsIDs.get(selectedVictorinIndex)).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 

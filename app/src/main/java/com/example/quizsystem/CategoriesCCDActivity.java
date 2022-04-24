@@ -87,7 +87,7 @@ public class CategoriesCCDActivity extends AppCompatActivity {
     private void loadData(){
         loadingDialog.show();
         categoriesCCDList.clear();
-        firestore.collection("QUIZ").document("Categories")
+        firestore.collection("TestSystem").document("Categories")
                 .get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 DocumentSnapshot doc = task.getResult();
@@ -121,8 +121,8 @@ public class CategoriesCCDActivity extends AppCompatActivity {
         categoryDate.put("VICTORINS", 0);
         categoryDate.put("COUNTER", "1");
 
-        String documentID = firestore.collection("QUIZ").document().getId();
-        firestore.collection("QUIZ").document(documentID)
+        String documentID = firestore.collection("TestSystem").document().getId();
+        firestore.collection("TestSystem").document(documentID)
                 .set(categoryDate)
                 .addOnSuccessListener(unused -> {
 
@@ -131,7 +131,7 @@ public class CategoriesCCDActivity extends AppCompatActivity {
                     categoryDocument.put("CAT" + String.valueOf(categoriesCCDList.size() + 1) + "_ID", documentID);
                     categoryDocument.put("COUNT", categoriesCCDList.size()+1);
 
-                    firestore.collection("QUIZ").document("Categories")
+                    firestore.collection("TestSystem").document("Categories")
                             .update(categoryDocument)
                             .addOnSuccessListener(unused1 -> {
                                 Toast.makeText(CategoriesCCDActivity.this, "Категория добавлена успешно", Toast.LENGTH_SHORT).show();

@@ -76,7 +76,7 @@ public class VictorinsCCDActivity extends AppCompatActivity {
 
         loadingDialog.show();
 
-        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+        firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     long numberOfVictorins = (long) documentSnapshot.get("VICTORINS");
@@ -109,7 +109,7 @@ public class VictorinsCCDActivity extends AppCompatActivity {
         Map<String, Object> questionDate = new ArrayMap<>();
         questionDate.put("COUNT", "0");
 
-        firestore.collection("QUIZ").document(currentCategoryId)
+        firestore.collection("TestSystem").document(currentCategoryId)
                 .collection(currentCounter).document("QUESTIONS_LIST")
                 .set(questionDate)
                 .addOnSuccessListener(unused -> {
@@ -118,7 +118,7 @@ public class VictorinsCCDActivity extends AppCompatActivity {
                     categoryDocument.put("VICTORIN" + String.valueOf(victorinsIDs.size() + 1) + "_ID", currentCounter);
                     categoryDocument.put("VICTORINS", victorinsIDs.size() + 1);
 
-                    firestore.collection("QUIZ").document(currentCategoryId)
+                    firestore.collection("TestSystem").document(currentCategoryId)
                             .update(categoryDocument)
                             .addOnSuccessListener(unused1 -> {
                                 Toast.makeText(VictorinsCCDActivity.this, "Викторина добавлена успешно", Toast.LENGTH_SHORT).show();

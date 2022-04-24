@@ -128,10 +128,10 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         questionData.put("D", dStr);
         questionData.put("ANSWER", ansStr);
 
-        String document_id = firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+        String document_id = firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                 .collection(victorinsIDs.get(selectedVictorinIndex)).document().getId();
 
-        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+        firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                 .collection(victorinsIDs.get(selectedVictorinIndex)).document(document_id)
                 .set(questionData)
                 .addOnSuccessListener(unused -> {
@@ -140,7 +140,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
                     questionDocument.put("Q" + String.valueOf(questionsList.size() + 1) + "_ID", document_id);
                     questionDocument.put("COUNT", String.valueOf(questionsList.size() + 1));
 
-                    firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+                    firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                             .collection(victorinsIDs.get(selectedVictorinIndex)).document("QUESTIONS_LIST")
                             .update(questionDocument)
                             .addOnSuccessListener(unused1 -> {
@@ -187,7 +187,7 @@ public class QuestionDetailsActivity extends AppCompatActivity {
         questionData.put("D", dStr);
         questionData.put("ANSWER", ansStr);
 
-        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+        firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                 .collection(victorinsIDs.get(selectedVictorinIndex)).document(questionsList.get(qID).getQuestionID())
                 .set(questionData)
                 .addOnSuccessListener(unused -> {

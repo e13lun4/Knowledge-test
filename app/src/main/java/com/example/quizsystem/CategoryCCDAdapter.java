@@ -153,7 +153,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
 
             categoryDoc.put("COUNT", index-1);
 
-            firestore.collection("QUIZ").document("Categories")
+            firestore.collection("TestSystem").document("Categories")
                     .set(categoryDoc)
                     .addOnSuccessListener(unused -> {
                         Toast.makeText(context, "Категория удалена успешно", Toast.LENGTH_SHORT).show();
@@ -177,14 +177,14 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
             categoryDate.put("NAME", categoryNewName);
 
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-            firestore.collection("QUIZ").document(categoryCCDList.get(pos).getId())
+            firestore.collection("TestSystem").document(categoryCCDList.get(pos).getId())
                     .update(categoryDate)
                     .addOnSuccessListener(unused -> {
 
                         Map<String, Object> categoryDocument = new ArrayMap<>();
                         categoryDocument.put("CAT" + String.valueOf(pos+1) + "_NAME", categoryNewName);
 
-                        firestore.collection("QUIZ").document("Categories")
+                        firestore.collection("TestSystem").document("Categories")
                                 .update(categoryDocument)
                                 .addOnSuccessListener(unused1 -> {
 

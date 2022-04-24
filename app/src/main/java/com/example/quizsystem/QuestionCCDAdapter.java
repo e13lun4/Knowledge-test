@@ -117,7 +117,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
 
             FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
-            firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+            firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                     .collection(victorinsIDs.get(selectedVictorinIndex)).document(questionsList.get(pos).getQuestionID())
                     .delete()
                     .addOnSuccessListener(unused -> {
@@ -133,7 +133,7 @@ public class QuestionCCDAdapter extends RecyclerView.Adapter<QuestionCCDAdapter.
 
                         questionDocument.put("COUNT", String.valueOf(index - 1));
 
-                        firestore.collection("QUIZ").document(categoriesCCDList.get(selectedCategoryIndex).getId())
+                        firestore.collection("TestSystem").document(categoriesCCDList.get(selectedCategoryIndex).getId())
                                 .collection(victorinsIDs.get(selectedVictorinIndex)).document("QUESTIONS_LIST")
                                 .set(questionDocument)
                                 .addOnSuccessListener(unused1 -> {

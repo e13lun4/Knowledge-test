@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
     }
     private void loadData(){
         categoryList.clear();
-        firestore.collection("QUIZ").document("Categories")
+        firestore.collection("TestSystem").document("Categories")
                 .get().addOnCompleteListener(task -> {
                     if(task.isSuccessful()){
                         DocumentSnapshot doc = task.getResult();

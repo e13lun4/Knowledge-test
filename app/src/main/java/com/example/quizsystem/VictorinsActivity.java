@@ -56,7 +56,7 @@ public class VictorinsActivity extends AppCompatActivity {
 
         victorinsIDs.clear();
 
-        firestore.collection("QUIZ").document(categoryList.get(selectedCatIndex).getId())
+        firestore.collection("TestSystem").document(categoryList.get(selectedCatIndex).getId())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     long numberOfVictorins = (long) documentSnapshot.get("VICTORINS");
