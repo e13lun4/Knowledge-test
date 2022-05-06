@@ -56,6 +56,7 @@ public class CategoriesCCDActivity extends AppCompatActivity {
 
         addCategoryDialog = new Dialog(CategoriesCCDActivity.this);
         addCategoryDialog.setContentView(R.layout.add_category_dialog);
+        addCategoryDialog.getWindow().setBackgroundDrawableResource(R.drawable.round);
         addCategoryDialog.setCancelable(true);
         addCategoryDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 

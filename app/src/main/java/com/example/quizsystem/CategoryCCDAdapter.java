@@ -8,6 +8,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,10 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
     @Override
     public CategoryCCDAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.category_ccd_item_layout, viewGroup, false);
+        float r = 150;
+        ShapeDrawable shape = new ShapeDrawable(new RoundRectShape(new float[] { r, r, r, r, r, r, r, r },null,null));
+        shape.getPaint().setColor(Color.rgb(255, 255, 255));
+        view.setBackground(shape);
         return new ViewHolder(view);
     }
 
@@ -77,6 +83,7 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
 
             editDialog = new Dialog(itemView.getContext());
             editDialog.setContentView(R.layout.edit_category_dialog);
+            editDialog.getWindow().setBackgroundDrawableResource(R.drawable.round);
             editDialog.setCancelable(true);
             editDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -128,8 +135,13 @@ public class CategoryCCDAdapter extends RecyclerView.Adapter<CategoryCCDAdapter.
                 dialog.getButton(dialog.BUTTON_NEGATIVE).setBackgroundColor(Color.rgb(139, 0, 255));
                 dialog.getButton(dialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
 
+                LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params1.setMargins(50, 0, 200, 0);
+
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0, 0, 50, 0);
+                params.setMargins(50, 0, 150, 0);
+
+                dialog.getButton(dialog.BUTTON_POSITIVE).setLayoutParams(params1);
                 dialog.getButton(dialog.BUTTON_NEGATIVE).setLayoutParams(params);
             });
         }

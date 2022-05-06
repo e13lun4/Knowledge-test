@@ -4,12 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/QuizSystem/app/src/main/res/layout/activity_score.xml" value="0.2864583333333333" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2825" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/categories_bg.xml" value="0.1" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/category_border.xml" value="0.1" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/gradient_background.xml" value="0.1" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2825" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/main_background.xml" value="0.1" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/progress_background.xml" value="0.1" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/round.xml" value="0.2825" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/round_corner.xml" value="0.13" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/round_delete.xml" value="0.2825" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/score_bg.xml" value="0.1" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/drawable/victorin_bg.xml" value="0.1" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/activity_category.xml" value="0.33" />
@@ -22,12 +26,13 @@
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/activity_splash.xml" value="0.276268115942029" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/activity_victorins.xml" value="0.25" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/activity_victorins_ccdactivity.xml" value="0.25" />
-        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/add_category_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/add_category_dialog.xml" value="0.22" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/category_ccd_item_layout.xml" value="0.25" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/category_iteam_layout.xml" value="0.22" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/edit_category_dialog.xml" value="0.22" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/loading_progressbar.xml" value="0.5" />
         <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/layout/victorin_item_layout.xml" value="0.25" />
+        <entry key="..\:/Users/fin20/AndroidStudioProjects/QuizSystem/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2825" />
       </map>
     </option>
   </component>
