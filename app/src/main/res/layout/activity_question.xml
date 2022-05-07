@@ -120,7 +120,7 @@
         android:background="@drawable/round_corner"
         android:backgroundTint="#87CEEB"
         android:gravity="center"
-        android:text="10"
+        android:text="15"
         android:textColor="#546E7A"
         android:textSize="22sp"
         android:textStyle="bold"

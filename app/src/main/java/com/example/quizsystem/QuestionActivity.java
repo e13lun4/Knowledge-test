@@ -158,7 +158,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void setQuestion(){
-        timer.setText(String.valueOf(10));
+        timer.setText(String.valueOf(15));
 
         question.setText(questionList.get(0).getQuestion());
 
@@ -176,16 +176,17 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void startTimer(){
-         countDown = new CountDownTimer(11000, 1000) {
+         countDown = new CountDownTimer(16000, 1000) {
             @Override
             public void onTick(long l) {
-                if(l < 10000){
+                if(l < 15000){
                     timer.setText(String.valueOf(l / 1000));
                 }
             }
 
             @Override
             public void onFinish() {
+                disabledButtons(option1, option2, option3, option4);
                 changeQuestion();
             }
         };
@@ -241,7 +242,7 @@ public class QuestionActivity extends AppCompatActivity {
 
             qCount.setText(String.valueOf(questionNum+1) + "/" + String.valueOf(questionList.size()));
 
-            timer.setText(String.valueOf(10));
+            timer.setText(String.valueOf(15));
 
             startTimer();
 
